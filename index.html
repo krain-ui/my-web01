@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบกิจกรรม: การสร้าง Portfolio Website</title>
+    <style>
+        /* ======================================== */
+        /* กิจกรรมที่ 3.2: CSS VARIABLES - ธีมสีหลัก */
+        /* ======================================== */
+        :root {
+            --primary: #6C63FF;           /* สีหลัก - ม่วงอมน้ำเงิน */
+            --primary-dark: #5A52D5;      /* สีหลักเข้ม */
+            --primary-light: #8B83FF;     /* สีหลักอ่อน */
+            --secondary: #2D2B55;         /* สีรอง - น้ำเงินเข้ม */
+            --accent: #FFD166;            /* สีเน้น - ทอง */
+            --light: #F8F9FA;             /* สีพื้นหลังอ่อน */
+            --white: #FFFFFF;
+            --text-dark: #2D2B55;
+            --text-light: #6C6A8A;
+            --gradient-main: linear-gradient(135deg, #6C63FF, #3F3D8E);
+            --gradient-card: linear-gradient(135deg, #FFFFFF, #F0EFFF);
+            --shadow-sm: 0 4px 15px rgba(108, 99, 255, 0.15);
+            --shadow-md: 0 8px 30px rgba(108, 99, 255, 0.2);
+            --shadow-lg: 0 15px 45px rgba(108, 99, 255, 0.25);
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 30px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 1.1: RESET & BASE STYLES      */
+        /* ======================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sarabun', 'Prompt', 'Kanit', sans-serif;
+            background: var(--light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 1.2: NAVIGATION BAR - เมนูนำทาง */
+        /* ======================================== */
+        .navbar {
+            background: var(--secondary);
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 25px rgba(45, 43, 85, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* กิจกรรมที่ 3.3: การจัดวางด้วย Flexbox */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 18px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        /* กิจกรรมที่ 4.2: Transition & Transform */
+        .logo:hover {
+            transform: scale(1.05);
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 6px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            display: block;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+        }
+
+        .nav-menu .active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .nav-menu .active::after {
+            content: '✦';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent);
+            font-size: 12px;
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 1.2: CONTAINER & FLEX LAYOUT  */
+        /* ======================================== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .flex-layout {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 2.1: MAIN CONTENT - Semantic HTML */
+        /* ======================================== */
+        .content {
+            flex: 3;
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(108, 99, 255, 0.08);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 20px 0 30px;
+            border-bottom: 2px solid var(--light);
+            margin-bottom: 35px;
+        }
+
+        .hero-avatar {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 4rem;
+            box-shadow: var(--shadow-md);
+            border: 4px solid var(--white);
+            transition: var(--transition);
+        }
+
+        /* กิจกรรมที่ 4.2: Transition & Transform */
+        .hero-avatar:hover {
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        .hero h1 {
+            color: var(--secondary);
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .hero-tags span {
+            background: var(--light);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            border: 1px solid rgba(108, 99, 255, 0.15);
+            transition: var(--transition);
+        }
+
+        .hero-tags span:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Section Headers */
+        .section-title {
+            color: var(--secondary);
+            font-size: 1.6rem;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 3.3: CARD GRID - ผลงานของฉัน   */
+        /* ======================================== */
+        .card-grid {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        /* กิจกรรมที่ 4.1: Box Model */
+        .card {
+            flex: 1 1 260px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid rgba(108, 99, 255, 0.06);
+            cursor: default;
+            position: relative;
+        }
+
+        /* กิจกรรมที่ 4.2: Transition & Transform */
+        .card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .card-image {
+            height: 160px;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(45, 43, 85, 0.3));
+        }
+
+        .card:nth-child(2) .card-image { background: linear-gradient(135deg, #FF6B6B, #EE5A24); }
+        .card:nth-child(3) .card-image { background: linear-gradient(135deg, #00D2D3, #0097E6); }
+        .card:nth-child(4) .card-image { background: linear-gradient(135deg, #F8A5C2, #F78FB3); }
+        .card:nth-child(5) .card-image { background: linear-gradient(135deg, #74B9FF, #0984E3); }
+        .card:nth-child(6) .card-image { background: linear-gradient(135deg, #55EFC4, #00B894); }
+
+        .card h3 {
+            padding: 18px 20px 8px;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .card p {
+            padding: 0 20px 18px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 3px 12px;
+            border-radius: 30px;
+            margin: 0 20px 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* ======================================== */
+        /* SKILLS SECTION - ทักษะของฉัน             */
+        /* ======================================== */
+        .skills-grid {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .skill-item {
+            background: var(--light);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            border: 1px solid rgba(108, 99, 255, 0.1);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-item:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 2.1: SIDEBAR - ข้อมูลส่วนตัว    */
+        /* ======================================== */
+        .sidebar {
+            flex: 1.2;
+            background: var(--gradient-main);
+            color: var(--white);
+            padding: 35px 30px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar h3:not(:first-child) {
+            margin-top: 30px;
+        }
+
+        .sidebar .profile-intro {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar .profile-intro .avatar-sm {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 2.8rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar .profile-intro h4 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .sidebar .profile-intro p {
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.92rem;
+            transition: var(--transition);
+            padding-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar li:hover {
+            padding-left: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+        }
+
+        .sidebar .contact-info li {
+            border-bottom: none;
+            padding: 8px 0;
+        }
+
+        .sidebar .contact-info li::before {
+            content: '📧 ';
+            font-size: 1rem;
+        }
+        .sidebar .contact-info li:nth-child(2)::before { content: '📱 '; }
+        .sidebar .contact-info li:nth-child(3)::before { content: '🌐 '; }
+
+        .sidebar .btn-contact {
+            display: block;
+            background: var(--accent);
+            color: var(--secondary);
+            text-align: center;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            margin-top: 20px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .sidebar .btn-contact:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(255, 209, 102, 0.4);
+            background: #FFD93D;
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 1.2: FOOTER - ส่วนท้าย        */
+        /* ======================================== */
+        .footer {
+            background: var(--secondary);
+            color: var(--light);
+            margin-top: 50px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-info p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-light);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 15px 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ======================================== */
+        /* กิจกรรมที่ 4.3: RESPONSIVE - ปรับสำหรับมือถือ */
+        /* ======================================== */
+        @media (max-width: 992px) {
+            .flex-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px 0;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-menu a {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                flex: 1 1 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero-avatar {
+                width: 90px;
+                height: 90px;
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .sidebar {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- กิจกรรมที่ 1.2: NAVIGATION BAR - เมนูนำทาง -->
+    <!-- ======================================== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">✨ <span>Port</span>folio</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="active">หน้าแรก</a></li>
+                <li><a href="#">ผลงาน</a></li>
+                <li><a href="#">ทักษะ</a></li>
+                <li><a href="#">ประสบการณ์</a></li>
+                <li><a href="#">ติดต่อ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ======================================== -->
+    <!-- กิจกรรมที่ 1.2: MAIN CONTENT & SIDEBAR   -->
+    <!-- ======================================== -->
+    <div class="container">
+        <div class="flex-layout">
+            
+            <!-- กิจกรรมที่ 2.1: MAIN - เนื้อหาหลัก -->
+            <main class="content">
+
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-avatar">👨‍💻</div>
+                    <h1>สวัสดีครับ ผม <span>ธีรภัทร</span></h1>
+                    <p>นักพัฒนาซอฟต์แวร์มือใหม่ ผู้หลงใหลในการสร้างสรรค์เว็บแอปพลิเคชันที่สวยงามและใช้งานได้จริง</p>
+                    <div class="hero-tags">
+                        <span>🎯 Frontend</span>
+                        <span>⚛️ React</span>
+                        <span>🎨 UI/UX</span>
+                        <span>📱 Responsive</span>
+                    </div>
+                </section>
+
+                <!-- ผลงานของฉัน -->
+                <h2 class="section-title">📂 ผลงานของฉัน</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-image">🛒</div>
+                        <h3>ร้านค้าออนไลน์</h3>
+                        <p>เว็บ E-Commerce สมบูรณ์แบบ ด้วย React + Firebase</p>
+                        <span class="card-badge">⭐ โครงการเด่น</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">📊</div>
+                        <h3>Dashboard Analytics</h3>
+                        <p>แผงควบคุมแสดงข้อมูลแบบ Real-time ด้วย Chart.js</p>
+                        <span class="card-badge">📈 Data Viz</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">🌱</div>
+                        <h3>แอปพลิเคชัน EcoTrack</h3>
+                        <p>ติดตามรอยเท้าคาร์บอนส่วนตัว ด้วย AI และ IoT</p>
+                        <span class="card-badge">🌍 Sustainability</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">🎮</div>
+                        <h3>เกมตอบคำถามออนไลน์</h3>
+                        <p>เกม Quiz แข่งขันแบบเรียลไทม์ด้วย Socket.io</p>
+                        <span class="card-badge">🏆 Multiplayer</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">📝</div>
+                        <h3>ระบบจัดการงาน</h3>
+                        <p>Task Management ด้วย Drag & Drop คล้าย Trello</p>
+                        <span class="card-badge">✅ Productivity</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-image">🎨</div>
+                        <h3>Portfolio 3D</h3>
+                        <p>เว็บ Portfolio แบบ 3D Interactive ด้วย Three.js</p>
+                        <span class="card-badge">✨ Creative</span>
+                    </div>
+                </div>
+
+                <!-- ทักษะของฉัน -->
+                <h2 class="section-title" style="margin-top: 50px;">🛠️ ทักษะของฉัน</h2>
+                <div class="skills-grid">
+                    <span class="skill-item">💻 HTML5</span>
+                    <span class="skill-item">🎨 CSS3 / Flexbox</span>
+                    <span class="skill-item">⚡ JavaScript</span>
+                    <span class="skill-item">⚛️ React.js</span>
+                    <span class="skill-item">📦 Node.js</span>
+                    <span class="skill-item">🐍 Python</span>
+                    <span class="skill-item">🗄️ SQL</span>
+                    <span class="skill-item">☁️ Firebase</span>
+                    <span class="skill-item">🔄 Git</span>
+                    <span class="skill-item">🎯 UI/UX Design</span>
+                </div>
+
+            </main>
+
+            <!-- กิจกรรมที่ 2.1: ASIDE - ข้อมูลส่วนตัว -->
+            <aside class="sidebar">
+                <div class="profile-intro">
+                    <div class="avatar-sm">🧑</div>
+                    <h4>ธีรภัทร สุขสวัสดิ์</h4>
+                    <p>นักพัฒนาเว็บ · อายุ 18 ปี</p>
+                </div>
+
+                <h3>📋 ข้อมูลส่วนตัว</h3>
+                <ul>
+                    <li>🎂 เกิด 15 มกราคม 2549</li>
+                    <li>📍 กรุงเทพมหานคร</li>
+                    <li>🎓 กำลังศึกษาชั้น ม.6</li>
+                    <li>🏫 โรงเรียนสาธิตแห่งมหาวิทยาลัย</li>
+                    <li>📚 สนใจวิศวกรรมคอมพิวเตอร์</li>
+                </ul>
+                
+                <h3>📞 ช่องทางติดต่อ</h3>
+                <ul class="contact-info">
+                    <li>teerapat@email.com</li>
+                    <li>081-234-5678</li>
+                    <li>github.com/teerapat-dev</li>
+                </ul>
+
+                <a href="#" class="btn-contact">📩 ติดต่อฉันเลย</a>
+
+                <h3 style="margin-top: 25px;">🎯 เป้าหมาย</h3>
+                <ul>
+                    <li>✅ เข้าศึกษาต่อคณะวิศวกรรมศาสตร์</li>
+                    <li>✅ สร้าง Portfolio ที่น่าประทับใจ</li>
+                    <li>✅ เรียนรู้ Full-Stack Development</li>
+                    <li>✅ ฝึกงานกับสตาร์ทอัพด้านเทคโนโลยี</li>
+                </ul>
+            </aside>
+            
+        </div>
+    </div>
+
+    <!-- ======================================== -->
+    <!-- กิจกรรมที่ 1.2: FOOTER - ส่วนท้าย          -->
+    <!-- ======================================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>✨ ผลงานเพื่อการศึกษา · พัฒนาด้วย CSS Flexbox</p>
+                <p style="font-size: 0.85rem; margin-top: 4px; opacity: 0.7;">เตรียมความพร้อมสู่วิทยาลัยในฝัน</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">หน้าแรก</a>
+                <a href="#">ผลงาน</a>
+                <a href="#">ทักษะ</a>
+                <a href="#">ติดต่อ</a>
+                <a href="#">ประวัติ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Teerapat Sukkasawat · Built with ❤️ for University Admission</p>
+        </div>
+    </footer>
+
+</body>
+</html>
